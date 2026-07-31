@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Carbon;
 
 #[Fillable(['username', 'email', 'discord_id', 'avatar'])]
 #[Hidden(['remember_token'])]
@@ -19,6 +18,13 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasUuids, Notifiable;
+
+    protected function casts(): array
+    {
+        return [
+            'is_admin' => 'boolean',
+        ];
+    }
 
     public function createdElections(): HasMany
     {
