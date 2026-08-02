@@ -14,7 +14,8 @@ class DiscordController extends Controller
         return Socialite::driver('discord')->redirect();
     }
 
-    public function callback() {
+    public function callback()
+    {
         $discord_user = Socialite::driver('discord')->user();
 
         $user = User::updateOrCreate(['discord_id' => $discord_user->getId()], [
@@ -25,6 +26,6 @@ class DiscordController extends Controller
 
         Auth::login($user, true);
 
-        return redirect()->intended('/dashboard');
+        return redirect()->intended();
     }
 }

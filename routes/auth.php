@@ -3,7 +3,13 @@
 // === DISCORD OAUTH ROUTES === //
 use App\Http\Controllers\Auth\DiscordController;
 
-Route::get('/discord/redirect', [DiscordController::class, 'redirect'])
-    ->name('login_with_discord');
+Route::prefix('auth')
+    ->name('auth.')
+    ->group(function () {
+        Route::get('/discord/redirect', [DiscordController::class, 'redirect'])
+            ->name('login_with_discord');
 
-Route::get('/discord/callback', [DiscordController::class, 'callback']);
+        Route::get('/discord/callback', [DiscordController::class, 'callback']);
+    });
+
+

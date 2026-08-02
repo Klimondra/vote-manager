@@ -1,5 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { dashboard } from '@/routes';
+import { index } from '@/routes/admin';
 import { login_with_discord } from '@/routes/auth';
 
 export default function Welcome() {
@@ -13,19 +13,19 @@ export default function Welcome() {
                     <nav className="flex items-center justify-end gap-4">
                         {auth.user ? (
                             <Link
-                                href={dashboard()}
+                                href={index()}
                                 className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
                             >
                                 Dashboard
                             </Link>
                         ) : (
                             <>
-                                <Link
-                                    href={login_with_discord()}
+                                <a
+                                    href={login_with_discord().url}
                                     className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
                                 >
                                     Log in
-                                </Link>
+                                </a>
                             </>
                         )}
                     </nav>

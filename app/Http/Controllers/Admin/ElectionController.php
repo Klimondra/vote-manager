@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreElectionRequest;
 use App\Models\Election;
 use App\Services\ElectionService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ElectionController extends Controller
 {
@@ -18,7 +19,9 @@ class ElectionController extends Controller
     public function index()
     {
         $elections = Election::all();
-        // TODO: Return inertia view
+        return Inertia::render('admin/elections/overview-elections', [
+            'elections' => $elections,
+        ]);
     }
 
     /**
