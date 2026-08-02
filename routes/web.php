@@ -13,3 +13,4 @@ Route::prefix('auth')
     ->group(base_path('routes/auth.php'));
 
 require __DIR__.'/settings.php';
+require __DIR__.'/admin.php';
