@@ -17,7 +17,7 @@ export function LandingVoteCard({ election }: LandingVoteCardProps) {
             <CardContent>
                 <p>{election.description}</p>
             </CardContent>
-            <CardFooter>
+            <CardFooter className='mt-auto'>
                 <Link href={show(election.id)} className="w-full">
                     <Button className="w-full">
                         <span>Přejít na volby</span>

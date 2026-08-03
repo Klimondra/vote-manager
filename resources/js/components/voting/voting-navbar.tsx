@@ -12,7 +12,7 @@ export default function VotingNavbar() {
             <div className={"w-full max-w-5xl mx-auto flex flex-row items-center justify-between gap-4"}>
                 <Link href={home()} className={"flex flex-row items-center gap-4"}>
                     <img src={"/rpmc-logo.webp"} alt={"Respublica Logo"} className={"size-6"} />
-                    <h1 className={"text-lg font-semibold"}>Respublica volby</h1>
+                    <h1 className={"text-xl font-semibold"}>Respublica volby</h1>
                 </Link>
 
                 {auth.user ? (

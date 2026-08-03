@@ -17,7 +17,7 @@ export default function LandingPage({ elections }: LandingPageProps) {
                 <div className="flex flex-col gap-4">
                     <h1 className="text-2xl font-bold">Probíhající a nadcházející volby</h1>
                     {runningElections.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {runningElections.map(election => (
                                 <LandingVoteCard key={election.id} election={election} />
                             ))}
@@ -30,7 +30,7 @@ export default function LandingPage({ elections }: LandingPageProps) {
                 {pastElections.length > 0 && (
                     <div className="flex flex-col gap-4">
                         <h2 className="text-2xl font-bold">Minulé volby</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {pastElections.map(election => (
                                 <LandingVoteCard key={election.id} election={election} />
                             ))}

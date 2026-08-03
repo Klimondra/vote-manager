@@ -5,6 +5,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { edit } from '@/routes/admin/elections';
 import type { Election } from '@/types';
 import { ElectionDeleteModal } from '@/components/election/election-delete-modal';
+import { show } from '@/routes/elections';
 
 interface ElectionTableRowProps {
     election: Election;
@@ -40,8 +41,7 @@ export const ElectionTableRow = ({ election }: ElectionTableRowProps) => {
             <TableCell>{electionEndDate}</TableCell>
             <TableCell>
                 <div className={'flex h-full items-center justify-end gap-2'}>
-                    {/*TODO: ADD EDIT LINK*/}
-                    <Link href={''}>
+                    <Link href={show(election.id)}>
                         <Button variant={'outline'} size={'icon'}>
                             <ExternalLink />
                         </Button>

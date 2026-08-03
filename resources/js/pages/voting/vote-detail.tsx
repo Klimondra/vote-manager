@@ -1,6 +1,6 @@
 import { Head } from '@inertiajs/react';
-import VotingInfo from '@/components/voting/voting-info';
 import VoteSection from '@/components/voting/vote-section';
+import VotingInfo from '@/components/voting/voting-info';
 import type { ElectionRich } from '@/types';
 
 interface VoteDetailProps {
