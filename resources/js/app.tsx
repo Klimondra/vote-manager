@@ -5,6 +5,7 @@ import { initializeTheme } from '@/hooks/use-appearance';
 import AdminLayout from '@/layouts/admin-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import '@fontsource/encode-sans-condensed';
+import VotingLayout from '@/layouts/voting-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -14,6 +15,8 @@ createInertiaApp({
         switch (true) {
             case name.startsWith('admin/'):
                 return AdminLayout;
+            case name.startsWith('voting/'):
+                return VotingLayout;
             case name.startsWith('settings/'):
                 return [AdminLayout, SettingsLayout];
             default:
