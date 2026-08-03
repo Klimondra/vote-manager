@@ -6,7 +6,7 @@ export type Election = {
     ends_at: string;
     created_at: string;
     updated_at: string;
-}
+};
 
 export type Candidate = {
     id: string;
@@ -15,4 +15,4 @@ export type Candidate = {
     election_id: string;
     created_at: string;
     updated_at: string;
-}
+};

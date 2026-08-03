@@ -3,5 +3,8 @@
         "antigravity"
     ],
     "cloud": false,
-    "guidelines": true
+    "guidelines": true,
+    "mcp": true,
+    "nightwatch": false,
+    "sail": false
 }

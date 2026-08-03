@@ -7,7 +7,7 @@ import type { Election } from '@/types';
 import { ElectionDeleteModal } from '@/components/election/election-delete-modal';
 
 interface ElectionTableRowProps {
-    election: Election
+    election: Election;
 }
 
 export const ElectionTableRow = ({ election }: ElectionTableRowProps) => {
@@ -16,8 +16,17 @@ export const ElectionTableRow = ({ election }: ElectionTableRowProps) => {
         election.description.substring(0, descriptionMaxLength) +
         (election.description.length > descriptionMaxLength ? '...' : '');
 
-    const electionStartDate = new Date(election.starts_at).toLocaleDateString();
-    const electionEndDate = new Date(election.ends_at).toLocaleDateString();
+    const electionStartDate = new Date(election.starts_at).toLocaleString(
+        'cs-CZ',
+        {
+            dateStyle: 'medium',
+            timeStyle: 'short',
+        },
+    );
+    const electionEndDate = new Date(election.ends_at).toLocaleString('cs-CZ', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+    });
 
     return (
         <TableRow key={election.id}>
@@ -32,7 +41,7 @@ export const ElectionTableRow = ({ election }: ElectionTableRowProps) => {
             <TableCell>
                 <div className={'flex h-full items-center justify-end gap-2'}>
                     {/*TODO: ADD EDIT LINK*/}
-                    <Link href={""}>
+                    <Link href={''}>
                         <Button variant={'outline'} size={'icon'}>
                             <ExternalLink />
                         </Button>

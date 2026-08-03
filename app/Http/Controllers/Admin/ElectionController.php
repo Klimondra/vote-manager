@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreElectionRequest;
+use App\Http\Requests\Admin\UpdateElectionRequest;
 use App\Models\Election;
 use App\Services\ElectionService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ElectionController extends Controller
@@ -19,6 +19,7 @@ class ElectionController extends Controller
     public function index()
     {
         $elections = Election::all();
+
         return Inertia::render('admin/elections/overview-elections', [
             'elections' => $elections,
         ]);
@@ -29,7 +30,7 @@ class ElectionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('admin/elections/create-election');
     }
 
     /**
@@ -38,10 +39,9 @@ class ElectionController extends Controller
     public function store(StoreElectionRequest $request)
     {
         $validated = $request->validated();
-
+        $validated['author_id'] = auth()->id();
         $this->electionService->createElectionWithService($validated);
 
-        // TODO: Dodělat route
         return redirect()->route('admin.elections.index');
     }
 
@@ -58,15 +58,22 @@ class ElectionController extends Controller
      */
     public function edit(Election $election)
     {
-        //
+        $election->load('candidates');
+
+        return Inertia::render('admin/elections/edit-election', [
+            'election' => $election,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Election $election)
+    public function update(UpdateElectionRequest $request, Election $election)
     {
-        //
+        $validated = $request->validated();
+        $this->electionService->updateElectionWithService($election, $validated);
+
+        return redirect()->route('admin.elections.index');
     }
 
     /**
@@ -74,6 +81,8 @@ class ElectionController extends Controller
      */
     public function destroy(Election $election)
     {
-        //
+        $election->delete();
+
+        return redirect()->route('admin.elections.index');
     }
 }

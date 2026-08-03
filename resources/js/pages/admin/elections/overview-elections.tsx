@@ -9,25 +9,25 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { index as adminIndex } from '@/routes/admin';
-import {
-    create,
-    index as electionsIndex,
-} from '@/routes/admin/elections';
+import { create, index as electionsIndex } from '@/routes/admin/elections';
 import type { Election } from '@/types';
 
 interface OverviewElectionsProps {
-    elections: Election[]
+    elections: Election[];
 }
 
-export default function OverviewElections({elections}: OverviewElectionsProps) {
-
+export default function OverviewElections({
+    elections,
+}: OverviewElectionsProps) {
     return (
         <>
             <Head title="Admin" />
-            <section className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="flex flex-row justify-between flex-wrap gap-4">
+            <section className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-6">
+                <div className="flex flex-row flex-wrap justify-between gap-4">
                     <h2 className="text-2xl font-bold">Přehled voleb</h2>
-                    <Link href={create()}><Button>Nové volby</Button></Link>
+                    <Link href={create()}>
+                        <Button>Nové volby</Button>
+                    </Link>
                 </div>
                 <Table className="border">
                     <TableHeader>
@@ -40,7 +40,10 @@ export default function OverviewElections({elections}: OverviewElectionsProps) {
                     </TableHeader>
                     <TableBody>
                         {elections.map((election) => (
-                            <ElectionTableRow election={election} key={election.id} />
+                            <ElectionTableRow
+                                election={election}
+                                key={election.id}
+                            />
                         ))}
                     </TableBody>
                 </Table>

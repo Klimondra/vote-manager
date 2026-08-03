@@ -2,13 +2,16 @@ import { Head, Link } from '@inertiajs/react';
 import { Vote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { index as adminIndex } from '@/routes/admin';
-import { create as electionCreate, index as electionsIndex } from '@/routes/admin/elections';
+import {
+    create as electionCreate,
+    index as electionsIndex,
+} from '@/routes/admin/elections';
 
 export default function AdminDashboard() {
     return (
         <>
             <Head title="Admin" />
-            <section className="flex h-full flex-1 flex-col items-center justify-center gap-4 overflow-x-auto rounded-xl p-4">
+            <section className="flex h-full flex-1 flex-col items-center justify-center gap-4 overflow-x-auto rounded-xl p-6">
                 <Vote className={'h-16 w-auto text-primary'} />
                 <div className="flex w-full flex-col items-center justify-center">
                     <h2 className={'text-center text-2xl font-bold'}>

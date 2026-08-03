@@ -16,7 +16,7 @@ import { destroy } from '@/routes/admin/elections';
 import type { Election } from '@/types';
 
 interface ElectionDeleteModalProps {
-    election: Election
+    election: Election;
 }
 
 export const ElectionDeleteModal = ({ election }: ElectionDeleteModalProps) => {
@@ -33,16 +33,18 @@ export const ElectionDeleteModal = ({ election }: ElectionDeleteModalProps) => {
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
-                    <AlertDialogTitle>
-                        Jsi si jistý?
-                    </AlertDialogTitle>
+                    <AlertDialogTitle>Jsi si jistý?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Opravdu chceš smazat volby "{election.title}" ? Tato akce je nevratná.
+                        Opravdu chceš smazat volby "{election.title}" ? Tato
+                        akce je nevratná.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction variant={'destructive'} onClick={deleteElection}>
+                    <AlertDialogAction
+                        variant={'destructive'}
+                        onClick={deleteElection}
+                    >
                         Smazat
                     </AlertDialogAction>
                 </AlertDialogFooter>
