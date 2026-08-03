@@ -11,5 +11,3 @@ Route::prefix('auth')
 
         Route::get('/discord/callback', [DiscordController::class, 'callback']);
     });
-
-

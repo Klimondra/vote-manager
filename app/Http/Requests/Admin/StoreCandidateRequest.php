@@ -20,7 +20,6 @@ class StoreCandidateRequest extends FormRequest
     /**
      * Candidate rules, that can be applied also while storing in election request.
      *
-     * @param string $prefix
      * @return string[]
      */
     public static function getCandidateRules(string $prefix = ''): array

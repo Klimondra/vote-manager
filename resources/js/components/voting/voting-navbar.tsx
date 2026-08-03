@@ -1,6 +1,6 @@
 import { Link, usePage } from "@inertiajs/react"
 import { LogOut } from "lucide-react";
-import { logout } from "@/routes";
+import { home, logout } from "@/routes";
 import { login_with_discord } from "@/routes/auth";
 import { Button } from "../ui/button";
 
@@ -10,10 +10,10 @@ export default function VotingNavbar() {
     return (
         <header className={"sticky top-0 z-10 bg-primary text-primary-foreground p-4 shadow-sm"}>
             <div className={"w-full max-w-5xl mx-auto flex flex-row items-center justify-between gap-4"}>
-                <div className={"flex flex-row items-center gap-4"}>
+                <Link href={home()} className={"flex flex-row items-center gap-4"}>
                     <img src={"/rpmc-logo.webp"} alt={"Respublica Logo"} className={"size-6"} />
                     <h1 className={"text-lg font-semibold"}>Respublica volby</h1>
-                </div>
+                </Link>
 
                 {auth.user ? (
                     <div className="flex flex-row items-center gap-4">

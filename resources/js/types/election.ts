@@ -15,4 +15,9 @@ export type Candidate = {
     election_id: string;
     created_at: string;
     updated_at: string;
+    votes_count?: number | null;
+};
+
+export type ElectionRich = Election & {
+    candidates: Candidate[];
 };

@@ -13,7 +13,7 @@ export default function LandingPage({ elections }: LandingPageProps) {
     return (
         <>
             <Head title="Respublica volby" />
-            <section className="w-full max-w-5xl mx-auto flex flex-col gap-10">
+            <section className="w-full max-w-5xl mx-auto flex flex-col gap-10 mt-2">
                 <div className="flex flex-col gap-4">
                     <h1 className="text-2xl font-bold">Probíhající a nadcházející volby</h1>
                     {runningElections.length > 0 ? (
