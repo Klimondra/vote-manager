@@ -16,6 +16,7 @@ import {
 import { index as adminIndex } from '@/routes/admin';
 import { index as electionsIndex } from '@/routes/admin/elections';
 import type { NavItem } from '@/types';
+import { home } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
@@ -45,7 +46,7 @@ export function AppSidebar() {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href={adminIndex()} prefetch>
+                            <Link href={home()} prefetch>
                                 <AppLogo />
                             </Link>
                         </SidebarMenuButton>
