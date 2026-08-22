@@ -1,11 +1,6 @@
 FROM dunglas/frankenphp:1-php8.5-bookworm AS base
 
-RUN apk add --no-cache \
-    postgresql-dev \
-    libzip-dev \
-    zip \
-    unzip \
-    && install-php-extensions \
+RUN install-php-extensions \
     pdo_pgsql \
     pgsql \
     pcntl \
@@ -27,11 +22,10 @@ RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache \
     && chmod -R 775 /app/storage /app/bootstrap/cache
 
-ENV SERVER_NAME=":8080"
+ENV SERVER_NAME="http://"
 ENV FRANKENPHP_CONFIG=""
 ENV LOG_CHANNEL="stderr"
 
 EXPOSE 8080
 
-ENTRYPOINT ["/usr/local/bin/frankenphp"]
-CMD ["run", "--config", "/etc/caddy/Caddyfile"]
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
