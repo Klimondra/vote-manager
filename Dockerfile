@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:1-php8.5-alpine AS base
+FROM dunglas/frankenphp:1-php8.5-bookworm AS base
 
 RUN apk add --no-cache \
     postgresql-dev \
