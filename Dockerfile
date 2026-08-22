@@ -33,4 +33,5 @@ ENV LOG_CHANNEL="stderr"
 
 EXPOSE 8080
 
-CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
+ENTRYPOINT ["/usr/local/bin/frankenphp"]
+CMD ["run", "--config", "/etc/caddy/Caddyfile"]
