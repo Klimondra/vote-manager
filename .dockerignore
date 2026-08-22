@@ -17,8 +17,3 @@ storage/logs/*
 tests
 .github
 phpunit.xml
-
-node_modules
-npm-debug.log
-Dockerfile
-docker-compose*.yml

@@ -1,68 +1,36 @@
-# STAGE 1: React build
-FROM node:24-alpine AS frontend
-WORKDIR /app
+FROM dunglas/frankenphp:1-php8.5-alpine AS base
 
-COPY package*.json .
-RUN npm ci
+RUN apk add --no-cache \
+    postgresql-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    && install-php-extensions \
+    pdo_pgsql \
+    pgsql \
+    pcntl \
+    bcmath \
+    opcache \
+    zip
 
-COPY . .
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-RUN npm run build
-
-# STAGE 2: Composer
-FROM composer:2-alpine AS composer
 WORKDIR /app
 
 COPY composer.json composer.lock ./
-
-RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-
-# STAGE 3: Runtime
-FROM php:8.5-fpm-alpine
-WORKDIR /var/www/html
-
-RUN apk add --no-cache \
-    nginx \
-    supervisor \
-    postgresql-dev \
-    icu-dev \
-    libzip-dev \
-    oniguruma-dev \
-    zip
-
-RUN docker-php-ext-install \
-    pdo_pgsql \
-    intl \
-    zip \
-    bcmath
+RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
 
 COPY . .
-COPY --from=composer /app/vendor ./vendor
-COPY --from=frontend /app/public/build ./public/build
 
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
+RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
 
-RUN chown -R www-data:www-data \
-    storage \
-    bootstrap/cache
+RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache \
+    && chmod -R 775 /app/storage /app/bootstrap/cache
 
-COPY docker/nginx/default.conf \
-     /etc/nginx/http.d/default.conf
-
-
-COPY docker/supervisor/supervisord.conf \
-     /etc/supervisord.conf
-
-
+ENV SERVER_NAME=":8080"
+ENV FRANKENPHP_CONFIG=""
+ENV LOG_CHANNEL="stderr"
 
 EXPOSE 8080
 
-
-
-CMD [
-"supervisord",
-"-c",
-"/etc/supervisord.conf"
-]
+CMD ["frankenphp", "run", "--config", "/etc/caddy/Caddyfile"]
