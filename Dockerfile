@@ -1,23 +1,6 @@
-# --- Stage 1: Build frontendu (Node.js & Vite) ---
-FROM node:22-alpine AS frontend
-
-WORKDIR /app
-
-COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
-RUN \
-    if [ -f package-lock.json ]; then npm ci; \
-    elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
-    elif [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-    else npm install; \
-    fi
-
-COPY . .
-RUN npm run build
-
-
-# --- Stage 2: Produkční FrankenPHP ---
 FROM dunglas/frankenphp:1-php8.5-bookworm AS base
 
+# Instalace PHP rozšíření
 RUN install-php-extensions \
     pdo_pgsql \
     pgsql \
@@ -26,22 +9,32 @@ RUN install-php-extensions \
     opcache \
     zip
 
+# Instalace Node.js a npm do PHP kontejneru pro Vite/Wayfinder
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@latest \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
 
-# Composer závislosti
-COPY composer.json composer.lock ./
+# Cache vrstev pro závislosti (Composer & NPM)
+COPY composer.json composer.lock package.json package-lock.json* ./
 RUN composer install --no-dev --no-scripts --no-autoloader --prefer-dist
+RUN npm ci
 
-# Zkopírování zbytku aplikace
+# Zkopírování zdrojového kódu
 COPY . .
 
-# Zkopírování sestavených assetů z Node stage
-COPY --from=frontend /app/public/build /app/public/build
-
+# Composer autoloader
 RUN composer dump-autoload --optimize --no-dev --classmap-authoritative
 
+# Sestavení frontendu (PHP i artisan jsou zde plně dostupné pro Wayfinder)
+RUN npm run build \
+    && rm -rf node_modules
+
+# Nastavení oprávnění
 RUN chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/public/build \
     && chmod -R 775 /app/storage /app/bootstrap/cache
 
