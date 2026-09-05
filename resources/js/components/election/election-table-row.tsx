@@ -1,11 +1,11 @@
 import { Link } from '@inertiajs/react';
-import { Edit, ExternalLink, Trash } from 'lucide-react';
+import { Edit, ExternalLink } from 'lucide-react';
+import { ElectionDeleteModal } from '@/components/election/election-delete-modal';
 import { Button } from '@/components/ui/button';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { edit } from '@/routes/admin/elections';
-import type { Election } from '@/types';
-import { ElectionDeleteModal } from '@/components/election/election-delete-modal';
 import { show } from '@/routes/elections';
+import type { Election } from '@/types';
 
 interface ElectionTableRowProps {
     election: Election;
@@ -13,9 +13,10 @@ interface ElectionTableRowProps {
 
 export const ElectionTableRow = ({ election }: ElectionTableRowProps) => {
     const descriptionMaxLength = 64;
+    const originalDescription = election.description ?? "";
     const electionDescription =
-        election.description.substring(0, descriptionMaxLength) +
-        (election.description.length > descriptionMaxLength ? '...' : '');
+        originalDescription.substring(0, descriptionMaxLength) +
+        (originalDescription.length  > descriptionMaxLength ? '...' : '');
 
     const electionStartDate = new Date(election.starts_at).toLocaleString(
         'cs-CZ',
